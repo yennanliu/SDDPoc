@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 import { createTrack } from './track';
 import { Car } from './car';
+import { MiniMap } from './minimap';
 
 // 2.1 Set up the basic Three.js scene
 const scene = new THREE.Scene();
@@ -13,11 +14,15 @@ const trackInfo = createTrack(scene);
 // 4.1 Create a car representation
 const car = new Car(scene, trackInfo.trackRadius, trackInfo.trackWidth);
 
+// New Capability: Track Map
+const miniMap = new MiniMap(scene, trackInfo.trackRadius);
+
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(0, 30, 50); // Adjusted for track overview
 camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.autoClear = false; // Required for multiple viewport rendering
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 document.body.appendChild(renderer.domElement);
@@ -52,7 +57,16 @@ function animate() {
     camera.position.z = car.mesh.position.z + cameraOffset.z;
     camera.lookAt(car.mesh.position);
 
+    // Track Map Update
+    miniMap.update(car.mesh);
+
+    // Main scene rendering
+    renderer.setViewport(0, 0, window.innerWidth, window.innerHeight);
+    renderer.clear();
     renderer.render(scene, camera);
+
+    // Mini-map rendering
+    miniMap.render(renderer, scene);
 }
 
 animate();
