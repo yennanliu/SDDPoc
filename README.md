@@ -23,6 +23,19 @@ gemini --yolo
 gemini --approval-mode=yolo
 
 /opsx:propose "build a racing car game"
+
+
+/opsx:new "your new feature ..."
+
+
+/opsx:ff
+# or
+/opsx:continue
+
+
+/opsx:apply
+
+/opsx:verify
 ```
 
 ## Ref
