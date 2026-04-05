@@ -8,6 +8,14 @@
 - OpenSpec
   
 
+## Commands
+
+```bash
+# gemini CLI
+
+# /opsx:propose "build a racing car game"
+```
+
 ## Ref
 
 - SDD
