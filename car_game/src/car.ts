@@ -9,6 +9,9 @@ export class Car {
     friction: number = 0.002;
     rotationSpeed: number = 0.04;
     
+    trackRadius: number = 30;
+    trackWidth: number = 8;
+
     keys = {
         w: false,
         s: false,
@@ -16,9 +19,15 @@ export class Car {
         d: false
     };
 
-    constructor(scene: THREE.Scene) {
+    constructor(scene: THREE.Scene, trackRadius?: number, trackWidth?: number) {
+        if (trackRadius !== undefined) this.trackRadius = trackRadius;
+        if (trackWidth !== undefined) this.trackWidth = trackWidth;
+
         // 4.1 Create a simple representation of the car
         this.mesh = new THREE.Group();
+
+        // Initial position on the track
+        this.mesh.position.set(this.trackRadius, 0, 0);
 
         const carBodyGeo = new THREE.BoxGeometry(2, 1, 4);
         const carBodyMat = new THREE.MeshStandardMaterial({ color: 0xff0000 });
