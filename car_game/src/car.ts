@@ -30,14 +30,16 @@ export class Car {
         this.mesh.position.set(this.trackRadius, 0, 0);
 
         const carBodyGeo = new THREE.BoxGeometry(2, 1, 4);
-        const carBodyMat = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        const carBodyMat = new THREE.MeshStandardMaterial({ color: 0xff0000, roughness: 0.5, metalness: 0.5 });
         const carBody = new THREE.Mesh(carBodyGeo, carBodyMat);
         carBody.position.y = 0.5;
+        carBody.castShadow = true;
+        carBody.receiveShadow = true;
         this.mesh.add(carBody);
 
         // Add some wheels
         const wheelGeo = new THREE.CylinderGeometry(0.4, 0.4, 0.4, 16);
-        const wheelMat = new THREE.MeshStandardMaterial({ color: 0x333333 });
+        const wheelMat = new THREE.MeshStandardMaterial({ color: 0x333333, roughness: 0.8 });
         
         const wheelPositions = [
             [-1, 0.4, 1.5], [1, 0.4, 1.5],
@@ -48,6 +50,8 @@ export class Car {
             const wheel = new THREE.Mesh(wheelGeo, wheelMat);
             wheel.rotation.z = Math.PI / 2;
             wheel.position.set(pos[0], pos[1], pos[2]);
+            wheel.castShadow = true;
+            wheel.receiveShadow = true;
             this.mesh.add(wheel);
         });
 
